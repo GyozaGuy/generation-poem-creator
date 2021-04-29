@@ -1,5 +1,5 @@
 import { defineElement, html } from 'nwc-utils';
-import './app.css';
+import './App.css';
 
 export default defineElement(
   'root-app',
