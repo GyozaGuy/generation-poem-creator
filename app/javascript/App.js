@@ -3,7 +3,7 @@ import './app.css';
 
 export default defineElement(
   'root-app',
-  class RootApp extends HTMLElement {
+  class extends HTMLElement {
     render() {
       return html`
         <input type="text" />
