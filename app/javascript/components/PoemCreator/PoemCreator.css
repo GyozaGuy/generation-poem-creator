@@ -36,7 +36,19 @@
   padding-left: var(--container-horizontal-padding);
   padding-right: var(--container-horizontal-padding);
   padding-top: var(--container-vertical-padding);
+  position: relative;
   width: var(--container-width);
+}
+
+#poemContainer::before {
+  backdrop-filter: blur(var(--background-blur));
+  content: '';
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
 }
 
 #poemField {
@@ -47,4 +59,5 @@
   text-shadow: 0 2px 4px var(--text-shadow-color);
   width: 100%;
   writing-mode: var(--text-direction);
+  z-index: 2;
 }

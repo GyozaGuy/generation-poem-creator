@@ -5,6 +5,7 @@ import './PoemCreator.css';
 export default defineElement(
   'poem-creator',
   class extends HTMLElement {
+    @renderOnChange backgroundBlur = 0;
     @renderOnChange backgroundImage = null;
     @renderOnChange containerHeight = 700;
     @renderOnChange containerHorizontalPadding = 10;
@@ -30,6 +31,7 @@ export default defineElement(
     }
 
     render({
+      backgroundBlur,
       backgroundImage,
       containerHeight,
       containerHorizontalPadding,
@@ -175,6 +177,15 @@ export default defineElement(
                   <option value="Temple">Temple</option>
                   <option value="Tiger">Tiger</option>
                 </select>
+
+                Background blur:
+                <input
+                  max="10"
+                  min="0"
+                  oninput=${({ target: { value } }) => (this.backgroundBlur = value)}
+                  type="range"
+                  value="${backgroundBlur}"
+                />
               </div>
 
               <div>
@@ -204,6 +215,7 @@ export default defineElement(
             <div
               id="poemContainer"
               style="
+                --background-blur: ${backgroundBlur}px;
                 ${backgroundImage
                 ? `--background-image: url(/backgrounds/${backgroundImage}.jpg);`
                 : ''}
