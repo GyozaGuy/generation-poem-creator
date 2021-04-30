@@ -9,6 +9,7 @@ export default defineElement(
     @renderOnChange containerHeight = 700;
     @renderOnChange containerPadding = 0;
     @renderOnChange containerWidth = 1000;
+    @renderOnChange fontFamily = 'AR PL New Kai';
     @renderOnChange horizontalAlignment = 'left';
     @renderOnChange lookupResult = null;
     @renderOnChange pinyin = '';
@@ -30,6 +31,7 @@ export default defineElement(
       containerHeight,
       containerPadding,
       containerWidth,
+      fontFamily,
       horizontalAlignment,
       lookupResult,
       pinyin,
@@ -75,6 +77,13 @@ export default defineElement(
           <section id="displayControls">
             <div>
               <h3>Text settings</h3>
+
+              Font:
+              <select onchange=${({ target: { value } }) => (this.fontFamily = value)}>
+                <option value="AR PL New Kai">AR PL New Kai</option>
+                <option value="AR PL New Sung">AR PL New Sung</option>
+                <option value="Noto Sans">Noto Sans</option>
+              </select>
 
               Size:
               <input
@@ -173,6 +182,7 @@ export default defineElement(
                 id="poemField"
                 onblur=${({ target: { textContent } }) => (this.poem = textContent.trim())}
                 style="
+                  --font-family: ${fontFamily};
                   --font-size: ${poemFontSize}px;
                   --horizontal-alignment: ${horizontalAlignment};
                   --text-color: ${textColor};
