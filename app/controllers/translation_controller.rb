@@ -1,9 +1,15 @@
+require 'chinese_pinyin'
+
 # TranslationController class
 class TranslationController < ApplicationController
-  def index
+  def lookup
     mode, term = params.values_at 'mode', 'term'
     response = trans term, mode || 'trad'
     render json: response
+  end
+
+  def pinyin
+    render json: { pinyin: Pinyin.t(params['poem'], tonemarks: true) }
   end
 end
 
