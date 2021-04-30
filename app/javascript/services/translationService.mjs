@@ -1,3 +1,11 @@
+export function getPinyin(poem) {
+  if (poem) {
+    return getJson(`/pinyin?poem=${poem}`);
+  }
+
+  return;
+}
+
 export function translate(term) {
   if (term) {
     return getJson(`/lookup?term=${term}`);

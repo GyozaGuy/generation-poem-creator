@@ -1,5 +1,5 @@
 import { defineElement, html, renderOnChange } from 'nwc-utils';
-import { translate } from '../../services/translationService';
+import { getPinyin, translate } from '../../services/translationService';
 import './PoemCreator.css';
 
 export default defineElement(
@@ -8,12 +8,20 @@ export default defineElement(
     @renderOnChange
     lookupResult = null;
     @renderOnChange
+    pinyin = '';
+    @renderOnChange
     poem = '';
     @renderOnChange
     poemFontSize = 48;
     timeout = null;
 
-    render({ lookupResult, poem, poemFontSize }) {
+    async propChanged(name, value) {
+      if (name === 'poem' && value) {
+        this.pinyin = (await getPinyin(value)).pinyin;
+      }
+    }
+
+    render({ lookupResult, pinyin, poem, poemFontSize }) {
       return html`
         <div id="poemCreatorContainer">
           <section>
@@ -61,7 +69,7 @@ export default defineElement(
           </section>
 
           <section>
-            Adjust your poem:
+            <div id="poemPronunciation">${pinyin}</div>
             <div
               id="poemField"
               onblur=${({ target: { textContent } }) => (this.poem = textContent.trim())}
