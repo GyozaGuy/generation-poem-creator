@@ -18,7 +18,7 @@ export default defineElement(
             <input
               id="poemCreatorInputField"
               oninput=${this.lookupCharacter}
-              placeholder="Type to lookup a Chinese character"
+              placeholder="Enter a word to find related Chinese characters"
               type="text"
             />
           </section>
@@ -51,7 +51,13 @@ export default defineElement(
 
           <section>
             Adjust your poem:
-            <div id="poemField" contenteditable>${poem}</div>
+            <div
+              id="poemField"
+              onblur=${({ target: { textContent } }) => (this.poem = textContent.trim())}
+              contenteditable
+            >
+              ${poem}
+            </div>
           </section>
         </div>
       `;
