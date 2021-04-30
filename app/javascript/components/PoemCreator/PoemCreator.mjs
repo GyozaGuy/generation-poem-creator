@@ -51,6 +51,12 @@ export default defineElement(
       return html`
         <div id="poemCreatorContainer">
           <section>
+            Character set:
+            <select onchange=${({ target: { value } }) => (this.characterSet = value)}>
+              <option value="trad">Traditional</option>
+              <option value="simp">Simplified</option>
+            </select>
+
             <input
               id="poemCreatorInputField"
               oninput=${this.lookupCharacter}
@@ -91,12 +97,6 @@ export default defineElement(
                   <option value="AR PL New Kai">AR PL New Kai</option>
                   <option value="AR PL New Sung">AR PL New Sung</option>
                   <option value="Noto Sans">Noto Sans</option>
-                </select>
-
-                Character set:
-                <select onchange=${({ target: { value } }) => (this.characterSet = value)}>
-                  <option value="trad">Traditional</option>
-                  <option value="simp">Simplified</option>
                 </select>
 
                 Size:
