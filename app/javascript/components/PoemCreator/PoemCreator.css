@@ -1,0 +1,29 @@
+#poemCreatorContainer section + section {
+  margin-top: 20px;
+}
+
+#poemCreatorInputField {
+  font-size: 32px;
+  padding: 5px;
+  width: 100%;
+}
+
+#lookupTerm {
+  font-size: 2em;
+}
+
+.vocabList {
+  display: grid;
+  font-size: 1.5em;
+  grid-template-columns: repeat(2, auto);
+}
+
+.character {
+  cursor: pointer;
+}
+
+#poemField {
+  box-shadow: inset 0 2px 4px Grey;
+  font-size: 2em;
+  padding: 10px;
+}

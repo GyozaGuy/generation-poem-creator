@@ -1,6 +1,6 @@
 import { defineElement, html } from 'nwc-utils';
 import './App.css';
-import WordLookup from './components/WordLookup/WordLookup';
+import PoemCreator from './components/PoemCreator/PoemCreator';
 
 export default defineElement(
   'root-app',
@@ -8,7 +8,7 @@ export default defineElement(
     render() {
       return html`
         <div id="wrapper">
-          ${WordLookup()}
+          ${PoemCreator()}
         </div>
       `;
     }
