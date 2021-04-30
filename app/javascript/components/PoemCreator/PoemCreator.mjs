@@ -7,7 +7,8 @@ export default defineElement(
   class extends HTMLElement {
     @renderOnChange backgroundImage = null;
     @renderOnChange containerHeight = 700;
-    @renderOnChange containerPadding = 0;
+    @renderOnChange containerHorizontalPadding = 10;
+    @renderOnChange containerVerticalPadding = 10;
     @renderOnChange containerWidth = 1000;
     @renderOnChange fontFamily = 'AR PL New Kai';
     @renderOnChange horizontalAlignment = 'left';
@@ -29,7 +30,8 @@ export default defineElement(
     render({
       backgroundImage,
       containerHeight,
-      containerPadding,
+      containerHorizontalPadding,
+      containerVerticalPadding,
       containerWidth,
       fontFamily,
       horizontalAlignment,
@@ -91,7 +93,7 @@ export default defineElement(
                 min="10"
                 oninput=${({ target: { value } }) => (this.poemFontSize = value)}
                 type="range"
-                value="${this.poemFontSize}"
+                value="${poemFontSize}"
               />
 
               Color:
@@ -125,42 +127,56 @@ export default defineElement(
 
             <div>
               <h3>Container settings</h3>
-              Height:
-              <input
-                max="1000"
-                min="100"
-                oninput=${({ target: { value } }) => (this.containerHeight = value)}
-                type="range"
-                value="${this.containerHeight}"
-              />
 
-              Width:
-              <input
-                max="1000"
-                min="100"
-                oninput=${({ target: { value } }) => (this.containerWidth = value)}
-                type="range"
-                value="${this.containerWidth}"
-              />
+              <div>
+                Height:
+                <input
+                  max="1000"
+                  min="100"
+                  oninput=${({ target: { value } }) => (this.containerHeight = value)}
+                  type="range"
+                  value="${containerHeight}"
+                />
 
-              Background:
-              <select onchange=${({ target: { value } }) => (this.backgroundImage = value)}>
-                <option value="">None</option>
-                <option value="Fan">Fan</option>
-                <option value="Fruit">Fruit</option>
-                <option value="Lanterns">Lanterns</option>
-                <option value="Temple">Temple</option>
-                <option value="Tiger">Tiger</option>
-              </select>
+                Width:
+                <input
+                  max="1000"
+                  min="100"
+                  oninput=${({ target: { value } }) => (this.containerWidth = value)}
+                  type="range"
+                  value="${containerWidth}"
+                />
 
-              Padding:
-              <input
-                max="1000"
-                min="0"
-                oninput=${({ target: { value } }) => (this.containerPadding = value)}
-                type="range"
-                value="${this.containerPadding}"
-              />
+                Background:
+                <select onchange=${({ target: { value } }) => (this.backgroundImage = value)}>
+                  <option value="">None</option>
+                  <option value="Fan">Fan</option>
+                  <option value="Fruit">Fruit</option>
+                  <option value="Lanterns">Lanterns</option>
+                  <option value="Temple">Temple</option>
+                  <option value="Tiger">Tiger</option>
+                </select>
+              </div>
+
+              <div>
+                Horizontal padding:
+                <input
+                  max="500"
+                  min="0"
+                  oninput=${({ target: { value } }) => (this.containerHorizontalPadding = value)}
+                  type="range"
+                  value="${containerHorizontalPadding}"
+                />
+
+                Vertical padding:
+                <input
+                  max="500"
+                  min="0"
+                  oninput=${({ target: { value } }) => (this.containerVerticalPadding = value)}
+                  type="range"
+                  value="${containerVerticalPadding}"
+                />
+              </div>
             </div>
           </section>
 
@@ -173,7 +189,8 @@ export default defineElement(
                 ? `--background-image: url(/backgrounds/${backgroundImage}.jpg);`
                 : ''}
                 --container-height: ${containerHeight}px;
-                --container-padding: ${containerPadding}px;
+                --container-horizontal-padding: ${containerHorizontalPadding}px;
+                --container-vertical-padding: ${containerVerticalPadding}px;
                 --container-width: ${containerWidth}px;
                 --vertical-alignment: ${verticalAlignment};
               "
