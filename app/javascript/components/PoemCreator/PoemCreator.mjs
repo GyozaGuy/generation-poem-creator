@@ -27,24 +27,18 @@ export default defineElement(
             html`
               <section>
                 <div id="lookupTerm">
-                  <strong>${lookupResult.term.word}</strong>${lookupResult.term.pronunciation}
+                  <strong>${lookupResult.term.word}</strong>
+                  ${lookupResult.term.pronunciation}
+                  ${lookupResult.alternates.length
+                    ? html`
+                        (${lookupResult.alternates.join(', ')})
+                      `
+                    : null}
                 </div>
 
                 <div class="vocabList">
-                  ${lookupResult.nouns.map(
-                    ([chinese, meanings]) => html`
-                      <div>
-                        ${chinese.split('').map(
-                          character => html`
-                            <strong class="character" onclick=${this.selectCharacter}>
-                              ${character}
-                            </strong>
-                          `
-                        )}
-                      </div>
-                      <span>${meanings}</span>
-                    `
-                  )}
+                  ${this.generateVocabList(lookupResult.nouns)}
+                  ${this.generateVocabList(lookupResult.verbs)}
                 </div>
               </section>
             `}
@@ -60,6 +54,25 @@ export default defineElement(
             </div>
           </section>
         </div>
+      `;
+    }
+
+    generateVocabList(list) {
+      return html`
+        ${list.map(
+          ([chinese, meanings]) => html`
+            <div>
+              ${chinese.split('').map(
+                character => html`
+                  <strong class="character" onclick=${this.selectCharacter}>
+                    ${character}
+                  </strong>
+                `
+              )}
+            </div>
+            <span>${meanings}</span>
+          `
+        )}
       `;
     }
 
