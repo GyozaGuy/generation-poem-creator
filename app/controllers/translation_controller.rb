@@ -23,10 +23,10 @@ def parse_result(result)
   term, _, nouns, verbs, alternates = result.split /\n\n/
   word, pronunciation = term.split /\n/
   {
-    alternates: alternates.split(/\n/).drop(1).join('').split(/,\s/),
-    nouns: create_pairs(nouns.split(/\n/).drop(1)),
+    alternates: alternates ? alternates.split(/\n/).drop(1).join('').split(/,\s/) : [],
+    nouns: nouns ? create_pairs(nouns.split(/\n/).drop(1)) : [],
     term: { pronunciation: pronunciation, word: word },
-    verbs: create_pairs(verbs.split(/\n/).drop(1))
+    verbs: verbs ? create_pairs(verbs.split(/\n/).drop(1)) : []
   }
 end
 

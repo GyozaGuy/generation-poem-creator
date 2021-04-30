@@ -62,7 +62,6 @@ export default defineElement(
 
       this.timeout = setTimeout(async () => {
         this.lookupResult = await translate(value);
-        console.log(this.lookupResult);
       }, 500);
     };
 

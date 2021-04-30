@@ -1,5 +1,9 @@
 export function translate(term) {
-  return getJson(`/lookup?term=${term}`);
+  if (term) {
+    return getJson(`/lookup?term=${term}`);
+  }
+
+  return;
 }
 
 async function getJson(path) {
