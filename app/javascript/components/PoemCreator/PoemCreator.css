@@ -46,4 +46,5 @@
   text-align: var(--horizontal-alignment);
   text-shadow: 0 2px 4px var(--text-shadow-color);
   width: 100%;
+  writing-mode: var(--text-direction);
 }

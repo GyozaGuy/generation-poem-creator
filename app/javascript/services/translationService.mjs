@@ -6,9 +6,9 @@ export function getPinyin(poem) {
   return;
 }
 
-export function translate(term) {
+export function translate(term, characterSet) {
   if (term) {
-    return getJson(`/lookup?term=${term}`);
+    return getJson(`/lookup?term=${term}&mode=${characterSet}`);
   }
 
   return;

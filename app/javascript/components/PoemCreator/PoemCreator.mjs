@@ -17,8 +17,10 @@ export default defineElement(
     @renderOnChange poem = '';
     @renderOnChange poemFontSize = 48;
     @renderOnChange textColor = '#000000';
+    @renderOnChange textDirection = 'unset';
     @renderOnChange textShadowColor = '#ffffff';
     @renderOnChange verticalAlignment = 'top';
+    characterSet = 'trad';
     timeout = null;
 
     async propChanged(name, value) {
@@ -40,6 +42,7 @@ export default defineElement(
       poem,
       poemFontSize,
       textColor,
+      textDirection,
       textShadowColor,
       verticalAlignment
     }) {
@@ -80,49 +83,65 @@ export default defineElement(
             <div>
               <h3>Text settings</h3>
 
-              Font:
-              <select onchange=${({ target: { value } }) => (this.fontFamily = value)}>
-                <option value="AR PL New Kai">AR PL New Kai</option>
-                <option value="AR PL New Sung">AR PL New Sung</option>
-                <option value="Noto Sans">Noto Sans</option>
-              </select>
+              <div>
+                Font:
+                <select onchange=${({ target: { value } }) => (this.fontFamily = value)}>
+                  <option value="AR PL New Kai">AR PL New Kai</option>
+                  <option value="AR PL New Sung">AR PL New Sung</option>
+                  <option value="Noto Sans">Noto Sans</option>
+                </select>
 
-              Size:
-              <input
-                max="200"
-                min="10"
-                oninput=${({ target: { value } }) => (this.poemFontSize = value)}
-                type="range"
-                value="${poemFontSize}"
-              />
+                Character set:
+                <select onchange=${({ target: { value } }) => (this.characterSet = value)}>
+                  <option value="trad">Traditional</option>
+                  <option value="simp">Simplified</option>
+                </select>
 
-              Color:
-              <input
-                oninput=${({ target: { value } }) => (this.textColor = value)}
-                type="color"
-                value="${textColor}"
-              />
+                Size:
+                <input
+                  max="200"
+                  min="10"
+                  oninput=${({ target: { value } }) => (this.poemFontSize = value)}
+                  type="range"
+                  value="${poemFontSize}"
+                />
 
-              Shadow:
-              <input
-                oninput=${({ target: { value } }) => (this.textShadowColor = value)}
-                type="color"
-                value="${textShadowColor}"
-              />
+                Color:
+                <input
+                  oninput=${({ target: { value } }) => (this.textColor = value)}
+                  type="color"
+                  value="${textColor}"
+                />
 
-              Horizontal alignment:
-              <select onchange=${({ target: { value } }) => (this.horizontalAlignment = value)}>
-                <option value="left">Left</option>
-                <option value="center">Center</option>
-                <option value="right">Right</option>
-              </select>
+                Shadow:
+                <input
+                  oninput=${({ target: { value } }) => (this.textShadowColor = value)}
+                  type="color"
+                  value="${textShadowColor}"
+                />
+              </div>
 
-              Vertical alignment:
-              <select onchange=${({ target: { value } }) => (this.verticalAlignment = value)}>
-                <option value="flex-start">Top</option>
-                <option value="center">Middle</option>
-                <option value="flex-end">Bottom</option>
-              </select>
+              <div>
+                Horizontal alignment:
+                <select onchange=${({ target: { value } }) => (this.horizontalAlignment = value)}>
+                  <option value="left">Left</option>
+                  <option value="center">Center</option>
+                  <option value="right">Right</option>
+                </select>
+
+                Vertical alignment:
+                <select onchange=${({ target: { value } }) => (this.verticalAlignment = value)}>
+                  <option value="flex-start">Top</option>
+                  <option value="center">Middle</option>
+                  <option value="flex-end">Bottom</option>
+                </select>
+
+                Direction:
+                <select onchange=${({ target: { value } }) => (this.textDirection = value)}>
+                  <option value="unset">Modern</option>
+                  <option value="tb">Traditional</option>
+                </select>
+              </div>
             </div>
 
             <div>
@@ -203,6 +222,7 @@ export default defineElement(
                   --font-size: ${poemFontSize}px;
                   --horizontal-alignment: ${horizontalAlignment};
                   --text-color: ${textColor};
+                  --text-direction: ${textDirection};
                   --text-shadow-color: ${textShadowColor};
                 "
                 contenteditable
@@ -238,7 +258,7 @@ export default defineElement(
       clearTimeout(this.timeout);
 
       this.timeout = setTimeout(async () => {
-        this.lookupResult = await translate(value);
+        this.lookupResult = await translate(value, this.characterSet);
       }, 500);
     };
 
