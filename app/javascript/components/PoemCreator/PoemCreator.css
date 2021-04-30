@@ -26,6 +26,15 @@
   font-size: 2em;
 }
 
+#poemContainer {
+  background-image: var(--background-image);
+  background-size: cover;
+  height: var(--container-height);
+  width: var(--container-width);
+}
+
 #poemField {
+  color: var(--text-color);
   font-size: var(--font-size);
+  text-shadow: 0 2px 4px var(--text-shadow-color);
 }

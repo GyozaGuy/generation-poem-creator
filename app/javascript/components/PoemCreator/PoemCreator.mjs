@@ -5,14 +5,15 @@ import './PoemCreator.css';
 export default defineElement(
   'poem-creator',
   class extends HTMLElement {
-    @renderOnChange
-    lookupResult = null;
-    @renderOnChange
-    pinyin = '';
-    @renderOnChange
-    poem = '';
-    @renderOnChange
-    poemFontSize = 48;
+    @renderOnChange backgroundImage = null;
+    @renderOnChange containerHeight = 700;
+    @renderOnChange containerWidth = 1000;
+    @renderOnChange lookupResult = null;
+    @renderOnChange pinyin = '';
+    @renderOnChange poem = '';
+    @renderOnChange poemFontSize = 48;
+    @renderOnChange textColor = '#000000';
+    @renderOnChange textShadowColor = '#ffffff';
     timeout = null;
 
     async propChanged(name, value) {
@@ -21,7 +22,17 @@ export default defineElement(
       }
     }
 
-    render({ lookupResult, pinyin, poem, poemFontSize }) {
+    render({
+      backgroundImage,
+      containerHeight,
+      containerWidth,
+      lookupResult,
+      pinyin,
+      poem,
+      poemFontSize,
+      textColor,
+      textShadowColor
+    }) {
       return html`
         <div id="poemCreatorContainer">
           <section>
@@ -56,27 +67,89 @@ export default defineElement(
             `}
 
           <section id="displayControls">
-            Font size:
-            <input
-              max="200"
-              min="10"
-              oninput=${({ target: { value } }) => {
-                this.poemFontSize = value;
-              }}
-              type="range"
-              value="${this.poemFontSize}"
-            />
+            <div>
+              <h3>Text settings</h3>
+
+              Size:
+              <input
+                max="200"
+                min="10"
+                oninput=${({ target: { value } }) => (this.poemFontSize = value)}
+                type="range"
+                value="${this.poemFontSize}"
+              />
+
+              Color:
+              <input
+                oninput=${({ target: { value } }) => (this.textColor = value)}
+                type="color"
+                value="${textColor}"
+              />
+
+              Shadow:
+              <input
+                oninput=${({ target: { value } }) => (this.textShadowColor = value)}
+                type="color"
+                value="${textShadowColor}"
+              />
+            </div>
+
+            <div>
+              <h3>Container settings</h3>
+              Height:
+              <input
+                max="1000"
+                min="100"
+                oninput=${({ target: { value } }) => (this.containerHeight = value)}
+                type="range"
+                value="${this.containerHeight}"
+              />
+
+              Width:
+              <input
+                max="1000"
+                min="100"
+                oninput=${({ target: { value } }) => (this.containerWidth = value)}
+                type="range"
+                value="${this.containerWidth}"
+              />
+
+              Background:
+              <select onchange=${({ target: { value } }) => (this.backgroundImage = value)}>
+                <option value="">None</option>
+                <option value="Fan">Fan</option>
+                <option value="Fruit">Fruit</option>
+                <option value="Lanterns">Lanterns</option>
+                <option value="Temple">Temple</option>
+                <option value="Tiger">Tiger</option>
+              </select>
+            </div>
           </section>
 
           <section>
             <div id="poemPronunciation">${pinyin}</div>
             <div
-              id="poemField"
-              onblur=${({ target: { textContent } }) => (this.poem = textContent.trim())}
-              style="--font-size: ${poemFontSize}px"
-              contenteditable
+              id="poemContainer"
+              style="
+                ${backgroundImage
+                ? `--background-image: url(/backgrounds/${backgroundImage}.jpg);`
+                : ''}
+                --container-height: ${containerHeight}px;
+                --container-width: ${containerWidth}px
+              "
             >
-              ${poem}
+              <div
+                id="poemField"
+                onblur=${({ target: { textContent } }) => (this.poem = textContent.trim())}
+                style="
+                  --font-size: ${poemFontSize}px;
+                  --text-color: ${textColor};
+                  --text-shadow-color: ${textShadowColor};
+                "
+                contenteditable
+              >
+                ${poem}
+              </div>
             </div>
           </section>
         </div>
