@@ -7,7 +7,9 @@ export default defineElement(
   class extends HTMLElement {
     @renderOnChange backgroundImage = null;
     @renderOnChange containerHeight = 700;
+    @renderOnChange containerPadding = 0;
     @renderOnChange containerWidth = 1000;
+    @renderOnChange horizontalAlignment = 'left';
     @renderOnChange lookupResult = null;
     @renderOnChange pinyin = '';
     @renderOnChange poem = '';
@@ -15,6 +17,7 @@ export default defineElement(
     @renderOnChange textColor = '#000000';
     @renderOnChange textShadowColor = '#ffffff';
     timeout = null;
+    @renderOnChange verticalAlignment = 'top';
 
     async propChanged(name, value) {
       if (name === 'poem' && value) {
@@ -25,13 +28,16 @@ export default defineElement(
     render({
       backgroundImage,
       containerHeight,
+      containerPadding,
       containerWidth,
+      horizontalAlignment,
       lookupResult,
       pinyin,
       poem,
       poemFontSize,
       textColor,
-      textShadowColor
+      textShadowColor,
+      verticalAlignment
     }) {
       return html`
         <div id="poemCreatorContainer">
@@ -92,6 +98,20 @@ export default defineElement(
                 type="color"
                 value="${textShadowColor}"
               />
+
+              Horizontal alignment:
+              <select onchange=${({ target: { value } }) => (this.horizontalAlignment = value)}>
+                <option value="left">Left</option>
+                <option value="center">Center</option>
+                <option value="right">Right</option>
+              </select>
+
+              Vertical alignment:
+              <select onchange=${({ target: { value } }) => (this.verticalAlignment = value)}>
+                <option value="flex-start">Top</option>
+                <option value="center">Middle</option>
+                <option value="flex-end">Bottom</option>
+              </select>
             </div>
 
             <div>
@@ -123,6 +143,15 @@ export default defineElement(
                 <option value="Temple">Temple</option>
                 <option value="Tiger">Tiger</option>
               </select>
+
+              Padding:
+              <input
+                max="1000"
+                min="0"
+                oninput=${({ target: { value } }) => (this.containerPadding = value)}
+                type="range"
+                value="${this.containerPadding}"
+              />
             </div>
           </section>
 
@@ -135,7 +164,9 @@ export default defineElement(
                 ? `--background-image: url(/backgrounds/${backgroundImage}.jpg);`
                 : ''}
                 --container-height: ${containerHeight}px;
-                --container-width: ${containerWidth}px
+                --container-padding: ${containerPadding}px;
+                --container-width: ${containerWidth}px;
+                --vertical-alignment: ${verticalAlignment};
               "
             >
               <div
@@ -143,6 +174,7 @@ export default defineElement(
                 onblur=${({ target: { textContent } }) => (this.poem = textContent.trim())}
                 style="
                   --font-size: ${poemFontSize}px;
+                  --horizontal-alignment: ${horizontalAlignment};
                   --text-color: ${textColor};
                   --text-shadow-color: ${textShadowColor};
                 "
