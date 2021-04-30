@@ -17,8 +17,8 @@ export default defineElement(
     @renderOnChange poemFontSize = 48;
     @renderOnChange textColor = '#000000';
     @renderOnChange textShadowColor = '#ffffff';
-    timeout = null;
     @renderOnChange verticalAlignment = 'top';
+    timeout = null;
 
     async propChanged(name, value) {
       if (name === 'poem' && value) {
