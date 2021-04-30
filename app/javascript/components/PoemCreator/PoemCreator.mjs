@@ -9,9 +9,11 @@ export default defineElement(
     lookupResult = null;
     @renderOnChange
     poem = '';
+    @renderOnChange
+    poemFontSize = 48;
     timeout = null;
 
-    render({ lookupResult, poem }) {
+    render({ lookupResult, poem, poemFontSize }) {
       return html`
         <div id="poemCreatorContainer">
           <section>
@@ -36,6 +38,8 @@ export default defineElement(
                     : null}
                 </div>
 
+                <p>Click a character to add it to your poem:</p>
+
                 <div class="vocabList">
                   ${this.generateVocabList(lookupResult.nouns)}
                   ${this.generateVocabList(lookupResult.verbs)}
@@ -43,11 +47,25 @@ export default defineElement(
               </section>
             `}
 
+          <section id="displayControls">
+            Font size:
+            <input
+              max="200"
+              min="10"
+              oninput=${({ target: { value } }) => {
+                this.poemFontSize = value;
+              }}
+              type="range"
+              value="${this.poemFontSize}"
+            />
+          </section>
+
           <section>
             Adjust your poem:
             <div
               id="poemField"
               onblur=${({ target: { textContent } }) => (this.poem = textContent.trim())}
+              style="--font-size: ${poemFontSize}px"
               contenteditable
             >
               ${poem}
